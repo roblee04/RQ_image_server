@@ -5,7 +5,7 @@
 
   <p>Results</p>
     {% for img_path in imgs %}
-        <img src="{{img_path}}">
+        <img src="{{url_for('static', filename=img_path)}}">
     {% endfor %}
 
 </body>

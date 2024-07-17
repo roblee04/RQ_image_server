@@ -24,8 +24,18 @@ def search(query: str):
     rclip = subprocess.run(["rclip", "-fn", "-t", "10", query], cwd="static/img", encoding='utf-8', stdout=subprocess.PIPE)
     results = rclip.stdout.split('\n')
 
+
+    # rclip returns the absolute path
+    # get relative path to static
+    d_path = ""
+    for directory in results[0].split('/'):
+        if directory == "static":
+            break
+
+        d_path += "/" + directory
+
     for i in range(len(results)):
-        results[i] = results[i][32:]
+        results[i] = results[i][d_path:]
 
     response = jsonify({"query":query, "result":results[:len(results) - 1]})
     # response.headers.add('Access-Control-Allow-Origin', '*')
